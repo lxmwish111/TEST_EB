@@ -38,6 +38,7 @@ IF "%1"=="--help" GOTO need_help
 IF "%1"=="help" GOTO need_help
 :: a user makefile is specified
 IF "%1"=="-f" GOTO user_makefile
+
 :: no user makefile is specified, use default file
 GOTO default_make
 
@@ -62,12 +63,16 @@ GOTO end
 :: a user makefile is specified
 :user_makefile
 CALL %TRESOS_BASE%/bin/make.exe %*
+if %ERRORLEVEL% neq 0 exit /b 1
 GOTO end
 
 :: no user makefile is specified, take default
 :default_make
 CALL %TRESOS_BASE%/bin/make.exe -f Makefile.mak %*
+if %ERRORLEVEL% neq 0 exit /b 1
 GOTO end
 
 :end
+@echo on
+echo %ERRORLEVEL%
 :: End of make.bat
