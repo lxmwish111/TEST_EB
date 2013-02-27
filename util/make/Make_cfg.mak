@@ -61,7 +61,7 @@ TARGET              := WINDOWS
 DERIVATE            := WIN32X86
 
 # output path for generated files
-GEN_OUTPUT_PATH  := C:\EB\tresos\2010b\workspace\simple_demo_can_dbg\output\generated
+GEN_OUTPUT_PATH  := $(PROJECT_ROOT)\output\generated
 
 # output path for files created by the build environment
 PROJECT_OUTPUT_PATH ?= $(GEN_OUTPUT_PATH)\..
