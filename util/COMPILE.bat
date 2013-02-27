@@ -25,7 +25,9 @@ if not exist %TRESOS_BASE% GOTO missing_path_names_TRESOS_BASE
 :: add %TRESOS_BASE%\bin to path
 SET PATH=%PATH%;%TRESOS_BASE%\bin;
 cmd /c "make depend"
+if %errorlevel% neq 0 exit /b %errorlevel% 
 cmd /c "make"
+if %errorlevel% neq 0 exit /b %errorlevel% 
 GOTO end
 
 :: The variable TRESOS_BASE was not specified
