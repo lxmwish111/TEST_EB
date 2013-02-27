@@ -22,7 +22,7 @@
 /* freestanding C: this really is the signature of main() */
 int main (void)
 {
-    EcuM_Init();    /* start OS never returns */
+    Ecu_Init();    /* start OS never returns */
     return 0;
 }
 
