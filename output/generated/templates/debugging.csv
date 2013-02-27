@@ -1,0 +1,18 @@
+# Configuration for dbg-demo (WINDOWS/WIN32X86)
+# Date, time: 2013-02-27, 10:02:37
+
+#timebase defintion;;timeunit
+timebase;ms;ms
+
+#parser type;reference/name;internal type;name;model;priority;mapping;period
+tasktype;Os_Task_Rte_TimedTask;task;Os_Task_Rte_TimedTask;;25;dbg-demo;;
+tasktype;Os_Task_Init_Task;task;Os_Task_Init_Task;;4;dbg-demo;;
+tasktype;Os_Task_Rte_EventTask;task;Os_Task_Rte_EventTask;;20;dbg-demo;;
+tasktype;Os_Task_SchM_Task;task;Os_Task_SchM_Task;;50;dbg-demo;;
+tasktype;Os_Task_Background_Task;task;Os_Task_Background_Task;;1;dbg-demo;;
+tasktype;Os_Isr_Can_Rx_Interrupt;interrupt;Os_Isr_Can_Rx_Interrupt;;;dbg-demo;;
+tasktype;Os_Isr_Can_Tx_Interrupt;interrupt;Os_Isr_Can_Tx_Interrupt;;;dbg-demo;;
+
+#ECUtype;ID;Scheduler;Name;Kernel Prio;Activaton Buffersize
+ecu;dbg-demo;AutosarOs;dbg-demo;30;1
+

@@ -1,0 +1,486 @@
+// This file is generated automatically. DO NOT EDIT!!
+// 
+// EB tresos AutoCore OS 4.2.5 WINDOWS/WIN32X86
+// (Build 20101123)
+// 
+// (c) 1998-2013 Elektrobit Automotive GmbH
+// Am Wolfmantel 46
+// 91058 Erlangen
+// GERMANY
+// 
+// http://www.automotive.elektrobit.com
+// 
+// Host-System  : Windows Vista
+// Date         : 2/27/13 10:02 AM           !!!IGNORE-LINE!!!
+
+//-------------------------------------------------------------------
+// 00 ORTI Version
+//-------------------------------------------------------------------
+
+VERSION
+{
+  KOIL = "2.2";
+  OSSEMANTICS = "ORTI", "2.2";
+};
+
+//-------------------------------------------------------------------
+// 10 Declaration
+//-------------------------------------------------------------------
+
+IMPLEMENTATION AUTOSAR_OS
+{
+
+OS
+{
+  ENUM [
+    "NO_TASK" = 0x0,
+    "Rte_TimedTask" = "&OS_taskTable[0]",
+    "Init_Task" = "&OS_taskTable[1]",
+    "Rte_EventTask" = "&OS_taskTable[2]",
+    "SchM_Task" = "&OS_taskTable[3]",
+    "Background_Task" = "&OS_taskTable[4]"
+  ] RUNNINGTASK, "Running task identification";
+  ENUM [
+    "NO_TASK" = 0xff,
+    "Rte_TimedTask" = 0,
+    "Init_Task" = 1,
+    "Rte_EventTask" = 2,
+    "SchM_Task" = 3,
+    "Background_Task" = 4
+  ] vs_SIGNAL_RUNNINGTASK, "Trace task identification";
+  ENUM [
+    "NO_ISR" = 0xfff,
+    "Can_Rx_Interrupt" = 0,
+    "Can_Tx_Interrupt" = 1,
+    "Os_Counter_TIMER0" = 2
+  ] RUNNINGISR2, "Running ISR identification";
+  ENUM [
+    "NO_ISR" = 0xfff,
+    "Can_Rx_Interrupt" = 0,
+    "Can_Tx_Interrupt" = 1,
+    "Os_Counter_TIMER0" = 2
+  ] vs_SIGNAL_RUNNINGISR2, "Trace ISR identification";
+  ENUM "unsigned char" [ "Boot" = 0, "Task" = 1, "Cat1" = 2, "Cat2" = 3, "Alarm Callback" = 4, "Shutdown" = 5, "Internal" = 6, "StartupHook" = 7, "ShutdownHook" = 8, "ErrorHook" = 9, "PreTaskHook" = 10, "PostTaskHook" = 11,"PreIsrHook" = 12, "PostIsrHook" = 13, "ProtectionHook" = 14 ] CURRENTSERVICE, "Current Service Identification";
+  ENUM "unsigned char" [ "Boot" = 0, "Task" = 1, "Cat1" = 2, "Cat2" = 3, "Alarm Callback" = 4, "Shutdown" = 5, "Internal" = 6, "StartupHook" = 7, "ShutdownHook" = 8, "ErrorHook" = 9, "PreTaskHook" = 10, "PostTaskHook" = 11,"PreIsrHook" = 12, "PostIsrHook" = 13, "ProtectionHook" = 14 ] vs_SIGNAL_CURRENTSERVICE, "Trace Service Identification";
+  CTYPE  RUNNINGTASKPRIORITY, "Running task prio";
+  STRING CURRENTAPPMODE, "Application mode";
+  ENUM ["E_OK" = 0,"E_OS_ACCESS" = 1,"E_OS_CALLEVEL" = 2,"E_OS_ID" = 3,"E_OS_LIMIT" = 4,"E_OS_NOFUNC" = 5,"E_OS_RESOURCE" = 6,"E_OS_STATE" = 7,"E_OS_VALUE" = 8 ] LASTERROR;
+  STRING vs_SCALABILITYCLASS, "Scalability class";
+  STRING vs_CC, "Conformance class";
+  STRING vs_SCHEDULE, "Schedule";
+  STRING vs_STATUS, "Status";
+  STRING vs_USERESSCHEDULER, "use RES SCHEDULER";
+  STRING vs_STARTUPHOOK, "StartUpHook";
+  STRING vs_SHUTDOWNHOOK, "ShutdownHook";
+  STRING vs_ERRORHOOK, "Error Hook";
+  STRING vs_PROTECTIONHOOK, "Protection Hook";
+  STRING vs_PRETASKHOOK, "Pre Task Hook";
+  STRING vs_POSTTASKHOOK, "Post Task Hook";
+  STRING vs_PREISRHOOK, "PreIsrHook";
+  STRING vs_POSTISRHOOK, "PostIsrHook";
+  STRING vs_STACKOPTIMIZATION, "Stackoptimization";
+  STRING vs_USEGETSERVICEID, "Use Get ServiceId";
+  STRING vs_USEPARAMETERACCESS, "Use ParameterAccess";
+  STRING vs_USELASTERROR, "Use Last Error";
+  STRING vs_EXTRA_RUNTIME_CHECKS, "Extra Runtime Checks";
+  STRING vs_TRAPPING, "Trapping kernel";
+  STRING vs_PROTECTION, "Protection";
+  STRING vs_TRACEBUFFER, "Trace Buffer";
+};
+ALARM
+{
+  STRING ACTION, "Assigned action";
+  ENUM [ "Stopped"=0, "Running"=1 ] STATE, "State";
+  STRING COUNTER, "Assigned counter";
+  CTYPE ALARMTIME, "Alarm time";
+  CTYPE CYCLETIME, "Cycle time";
+  STRING vs_TASK, "Assigned task";
+  STRING vs_EVENT, "Assigned event";
+  STRING vs_AUTOSTART, "Autostart";
+  STRING vs_AUTOSTART_ALARMTIME, "(AutoStart) Alarmtime";
+  STRING vs_AUTOSTART_CYCLETIME, "(AutoStart) Cycletime";
+};
+vs_APPLICATION
+{
+  STRING NUMBER_TASKS, "#Tasks";
+  STRING NUMBER_RESOURCES, "#Resources";
+  STRING NUMBER_ISRS, "#Isrs";
+  STRING NUMBER_ALARMS, "#Alarms";
+  STRING NUMBER_SCHEDULETABLES, "#ScheduleTables";
+  STRING NUMBER_COUNTER, "#Counters";
+  STRING HAS_STARTUPHOOK, "StartUpHook";
+  STRING HAS_ERRORHOOK, "ErrorHook";
+  STRING HAS_SHUTDOWNHOOK, "Shutdown Hook";
+};
+vs_COUNTER
+{
+  STRING MAXALLOWEDVALUE, "Max Allowed Value";
+  STRING TICKSPERBASE, "Ticks per Base";
+  STRING MINCYCLE, "Min Cycle";
+  CTYPE VALUE, "VALUE";
+};
+vs_EVENT
+{
+  STRING vs_ID, "ID";
+  STRING MASK , "Event Mask";
+};
+vs_ISR
+{
+  STRING CATEGORY, "Category";
+  ENUM "unsigned int" ["0"=0, "RATEX"=16, "BLOCKED"=32, "RATEX+BLOCKED"=48] STATUS, "Status";
+  STRING ENABLE_ON_STARTUP, "Enable on Startup";
+  STRING MEASURE_MAX_RUNTIME, "Measure Max Runtime";
+  STRING vs_ASSIGNEDPRIO, "Assigned priority";
+  STRING vs_REALPRIORITY, "Real priority";
+  STRING STACKSIZE, "Stacksize";
+  STRING TIMING_PROTECTION, "Timing Protection";
+  STRING EXECUTION_BUDGET, "Execution budget";
+  STRING OSINTERRUPTLOCKTIME, "Os interrupt lock budget";
+  STRING ALLINTERRUPTLOCKTIME, "All interrupt lock budget";
+  STRING RESOURCE, "Time monitored resources";
+  STRING RESOURCELOCKTIME, "Resource lock budget";
+  STRING COUNTLIMIT, "Count Limit";
+  STRING TIMEFRAME, "Time Limit";
+};
+RESOURCE
+{
+  ENUM "unsigned char" [ "UNLOCKED"=0,"LOCKED"=1 ] STATE, "Resource state";
+  CTYPE LOCKER, "Locking task id";
+  STRING PRIORITY, "Ceiling priority";
+};
+vs_SCHEDULETABLE
+{
+  ENUM "unsigned int" ["STOPPED"=0, "WAITTING"=1, "CHAINED"=2, "RUNNING"=3, "QUARANTINED"=4] STATE, "State";
+  STRING PERIOD, "Duration";
+  STRING IS_PERIODIC, "Repeating";
+  CTYPE NEXT_EVENT, "Next event";
+  STRING COUNTER, "Counter";
+  CTYPE ABS_COUNTER_VALUE, "Absolute Counter Value";
+  STRING ENTRY_0, "Schedule Table entry 0";
+};
+STACK
+{
+  STRING vs_USERSIZE, "User defined stack size";
+  CTYPE SIZE, "Actual stack size (incl. Os)";
+  CTYPE "unsigned char *" BASEADDRESS, "Stack base address";
+  STRING STACKDIRECTION, "Stack direction";
+  STRING FILLPATTERN, "Fill pattern";
+};
+TASK
+{
+  STRING vs_ID, "ID";
+  ENUM "unsigned int" [ "SUSPENDED"=0, "QUARANTINED" = 1, "NEW"=2, "READY_SYNC"=3, "READ_ASYNC"=4, "RUNNING"=5, "WAITING"=6, "NSTATES"=7, "INVALID"=255] STATE, "Taskstate";
+  CTYPE CURRENTACTIVATIONS, "Current task activations";
+  STRING vs_MAXACTIVATIONS, "Maximum number of activations";
+  STRING STACK, "Stack";
+  STRING STACKSIZE, "Stacksize";
+  STRING vs_SHAREDSTACK, "Stack sharing";
+  STRING vs_ASSIGNEDPRIO, "Assigned priority";
+  STRING vs_REALPRIORITY, "Real priority";
+  CTYPE PRIORITY, "Current priority";
+  STRING TYPE, "Task type";
+  STRING USE_HW_FP, "Use floating point";
+  STRING MEASURE_MAX_RUNTIME, "Measure Max Runtime";
+  STRING TIMING_PROTECTION, "Timing Protection";
+  STRING EXECUTION_BUDGET, "Execution budget";
+  STRING OSINTERRUPTLOCKTIME, "Os interrupt lock budget";
+  STRING ALLINTERRUPTLOCKTIME, "All interrupt lock budget";
+  STRING RESOURCE, "Time monitored resources";
+  STRING RESOURCELOCKTIME, "Resource lock budget";
+  STRING COUNTLIMIT , "Count Limit";
+  STRING TIMEFRAME , "Time Limit";
+};
+
+};
+
+//-------------------------------------------------------------------
+// 20 Implementation
+//-------------------------------------------------------------------
+
+OS WIN32X86
+{
+  RUNNINGTASK = "OS_taskCurrent";
+  RUNNINGISR2 = "OS_isrCurrent";
+  CURRENTSERVICE = "OS_inFunction";
+  CURRENTAPPMODE = "OS_mode";
+  RUNNINGTASKPRIORITY = "OS_taskCurrent->dynamic->prio";
+  LASTERROR = "OS_errorStatus.result";
+  vs_SCALABILITYCLASS = "1";
+  vs_CC = "ECC1";
+  vs_SCHEDULE = "MIXED";
+  vs_STATUS = "EXTENDED";
+  vs_STARTUPHOOK = "false";
+  vs_SHUTDOWNHOOK = "false";
+  vs_ERRORHOOK = "true";
+  vs_PROTECTIONHOOK = "false";
+  vs_PRETASKHOOK = "false";
+  vs_POSTTASKHOOK = "false";
+  vs_PREISRHOOK = "false";
+  vs_POSTISRHOOK = "false";
+  vs_USEGETSERVICEID = "false";
+  vs_USEPARAMETERACCESS = "false";
+  vs_USERESSCHEDULER = "true";
+  vs_STACKOPTIMIZATION = "GLOBAL";
+  vs_EXTRA_RUNTIME_CHECKS = "false";
+  vs_USELASTERROR = "false";
+  vs_PROTECTION = "ON";
+  vs_TRAPPING = "false";
+  vs_SIGNAL_RUNNINGTASK = "OTM.0.0.0";
+  vs_SIGNAL_RUNNINGISR2 = "OTM.0.0.0";
+  vs_SIGNAL_CURRENTSERVICE = "OTM.0.0.0";
+};
+
+ALARM AlarmIncrementRteCounter
+{
+  ACTION = "INCREMENT_COUNTER SwCounter_1ms";
+  COUNTER = "HwCounter";
+  STATE = "OS_alarmDynamic[0].inUse";
+  CYCLETIME = "OS_alarmDynamic[0].period";
+  vs_AUTOSTART = "true";
+  vs_AUTOSTART_ALARMTIME = "10";
+  vs_AUTOSTART_CYCLETIME = "10";
+};
+ALARM SchM_Alarm
+{
+  vs_TASK = "SchM_Task";
+  ACTION = "ACTIVATE_TASK SchM_Task";
+  COUNTER = "SwCounter_1ms";
+  STATE = "OS_alarmDynamic[1].inUse";
+  CYCLETIME = "OS_alarmDynamic[1].period";
+  vs_AUTOSTART = "true";
+  vs_AUTOSTART_ALARMTIME = "1";
+  vs_AUTOSTART_CYCLETIME = "1";
+};
+ALARM OS_Rte_DefaultScheduleTable
+{
+  ACTION = "RUN_SCHEDULETABLE Rte_DefaultScheduleTable";
+  COUNTER = "SwCounter_1ms";
+  STATE = "OS_alarmDynamic[2].inUse";
+  CYCLETIME = "OS_alarmDynamic[2].period";
+  vs_AUTOSTART = "false";
+};
+
+vs_COUNTER HwCounter
+{
+  TICKSPERBASE = "1000";
+  MINCYCLE = "1";
+  VALUE = "OS_counterDynamic[0].current";
+  MAXALLOWEDVALUE = "4294967295";
+};
+vs_COUNTER SwCounter_1ms
+{
+  TICKSPERBASE = "1";
+  MINCYCLE = "1";
+  VALUE = "OS_counterDynamic[1].current";
+  MAXALLOWEDVALUE = "4294967295";
+};
+
+vs_EVENT Rte_OSShutdownEvent
+{
+  MASK = "1";
+  vs_ID = "0";
+};
+vs_EVENT Rte_OSTriggerRunnableEvent_0_0
+{
+  MASK = "2";
+  vs_ID = "1";
+};
+vs_EVENT Rte_OSResolveWaitPointEvent_0_1
+{
+  MASK = "4";
+  vs_ID = "2";
+};
+
+vs_ISR Can_Rx_Interrupt
+{
+  CATEGORY = "2";
+  ENABLE_ON_STARTUP = "true";
+  MEASURE_MAX_RUNTIME = "false";
+  STACKSIZE = "27560";
+  STATUS = "(OS_isrDynamic[0].statusflags & 48)";
+  vs_ASSIGNEDPRIO = "1";
+  vs_REALPRIORITY = "1";
+  TIMING_PROTECTION = "false";
+};
+vs_ISR Can_Tx_Interrupt
+{
+  CATEGORY = "2";
+  ENABLE_ON_STARTUP = "true";
+  MEASURE_MAX_RUNTIME = "false";
+  STACKSIZE = "27560";
+  STATUS = "(OS_isrDynamic[1].statusflags & 48)";
+  vs_ASSIGNEDPRIO = "1";
+  vs_REALPRIORITY = "1";
+  TIMING_PROTECTION = "false";
+};
+vs_ISR Os_Counter_TIMER0
+{
+  CATEGORY = "2";
+  ENABLE_ON_STARTUP = "false";
+  MEASURE_MAX_RUNTIME = "false";
+  STACKSIZE = "45000";
+  STATUS = "(OS_isrDynamic[2].statusflags & 48)";
+  vs_ASSIGNEDPRIO = "1";
+  vs_REALPRIORITY = "1";
+  TIMING_PROTECTION = "false";
+};
+
+RESOURCE OS_RESSCHEDULER
+{
+  PRIORITY = "SCHEDULER";
+  LOCKER = "(OS_resourceDynamic[0].takenBy != 0xff) ? (OS_resourceDynamic[0].takenBy) : ((OS_resourceDynamic[0].lastPrio > 0xff) ? (5) : -1)";
+  STATE = "OS_resourceDynamic[0].takenBy != 0xff || OS_resourceDynamic[0].lastPrio > 0xff";
+};
+RESOURCE Rte_Res_0
+{
+  PRIORITY = "TASK: 4";
+  LOCKER = "(OS_resourceDynamic[1].takenBy != 0xff) ? (OS_resourceDynamic[1].takenBy) : ((OS_resourceDynamic[1].lastPrio > 0xff) ? (5) : -1)";
+  STATE = "OS_resourceDynamic[1].takenBy != 0xff || OS_resourceDynamic[1].lastPrio > 0xff";
+};
+
+vs_SCHEDULETABLE Rte_DefaultScheduleTable
+{
+  STATE = "OS_scheduleDynamic[0].status & 7";
+  NEXT_EVENT = "OS_scheduleDynamic[0].next";
+  ABS_COUNTER_VALUE = "OS_scheduleDynamic[0].ctrAbs";
+  IS_PERIODIC = "true";
+  PERIOD = "10";
+  COUNTER = "SwCounter_1ms";
+  ENTRY_0 = "OFFSET=0 ACTIVATE_TASKS={Rte_TimedTask;} ";
+};
+
+STACK OS_taskStack_slot0
+{
+  SIZE = "90480";
+  vs_USERSIZE = "50480";
+  BASEADDRESS = "&OS_taskStack_slot0[0U]";
+  STACKDIRECTION = "DOWN";
+  FILLPATTERN = "0x0";
+};
+STACK OS_taskStack_slot1
+{
+  SIZE = "90480";
+  vs_USERSIZE = "50480";
+  BASEADDRESS = "&OS_taskStack_slot1[0U]";
+  STACKDIRECTION = "DOWN";
+  FILLPATTERN = "0x0";
+};
+STACK OS_taskStack_slot2
+{
+  SIZE = "90480";
+  vs_USERSIZE = "50480";
+  BASEADDRESS = "&OS_taskStack_slot2[0U]";
+  STACKDIRECTION = "DOWN";
+  FILLPATTERN = "0x0";
+};
+STACK OS_taskStack_slot3
+{
+  SIZE = "90480";
+  vs_USERSIZE = "50480";
+  BASEADDRESS = "&OS_taskStack_slot3[0U]";
+  STACKDIRECTION = "DOWN";
+  FILLPATTERN = "0x0";
+};
+STACK OS_taskStack_slot4
+{
+  SIZE = "70480";
+  vs_USERSIZE = "50480";
+  BASEADDRESS = "&OS_taskStack_slot4[0U]";
+  STACKDIRECTION = "DOWN";
+  FILLPATTERN = "0x0";
+};
+STACK OS_kernStack
+{
+  SIZE = "115000";
+  BASEADDRESS = "&OS_kernStack[0U]";
+  STACKDIRECTION = "DOWN";
+  FILLPATTERN = "0x0";
+};
+
+TASK Rte_TimedTask
+{
+  vs_ID = "0";
+  STATE = "OS_taskDynamic[0].state";
+  CURRENTACTIVATIONS = "(OS_taskDynamic[0].state) != 0 ";
+  vs_MAXACTIVATIONS = "1";
+  STACK = "OS_taskStack_slot0";
+  vs_SHAREDSTACK = "false";
+  STACKSIZE = "90480";
+  vs_ASSIGNEDPRIO = "25";
+  vs_REALPRIORITY = "3";
+  PRIORITY = "OS_taskDynamic[0].prio";
+  TYPE = "BASIC";
+  USE_HW_FP = "false";
+  MEASURE_MAX_RUNTIME = "false";
+  TIMING_PROTECTION = "false";
+};
+TASK Init_Task
+{
+  vs_ID = "1";
+  STATE = "OS_taskDynamic[1].state";
+  CURRENTACTIVATIONS = "(OS_taskDynamic[1].state) != 0 ";
+  vs_MAXACTIVATIONS = "1";
+  STACK = "OS_taskStack_slot4";
+  vs_SHAREDSTACK = "false";
+  STACKSIZE = "70480";
+  vs_ASSIGNEDPRIO = "4";
+  vs_REALPRIORITY = "1";
+  PRIORITY = "OS_taskDynamic[1].prio";
+  TYPE = "BASIC";
+  USE_HW_FP = "false";
+  MEASURE_MAX_RUNTIME = "false";
+  TIMING_PROTECTION = "false";
+};
+TASK Rte_EventTask
+{
+  vs_ID = "2";
+  STATE = "OS_taskDynamic[2].state";
+  CURRENTACTIVATIONS = "(OS_taskDynamic[2].state) != 0 ";
+  vs_MAXACTIVATIONS = "1";
+  STACK = "OS_taskStack_slot1";
+  vs_SHAREDSTACK = "false";
+  STACKSIZE = "90480";
+  vs_ASSIGNEDPRIO = "20";
+  vs_REALPRIORITY = "2";
+  PRIORITY = "OS_taskDynamic[2].prio";
+  TYPE = "EXTENDED";
+  USE_HW_FP = "false";
+  MEASURE_MAX_RUNTIME = "false";
+  TIMING_PROTECTION = "false";
+};
+TASK SchM_Task
+{
+  vs_ID = "3";
+  STATE = "OS_taskDynamic[3].state";
+  CURRENTACTIVATIONS = "(OS_taskDynamic[3].state) != 0 ";
+  vs_MAXACTIVATIONS = "1";
+  STACK = "OS_taskStack_slot2";
+  vs_SHAREDSTACK = "false";
+  STACKSIZE = "90480";
+  vs_ASSIGNEDPRIO = "50";
+  vs_REALPRIORITY = "5";
+  PRIORITY = "OS_taskDynamic[3].prio";
+  TYPE = "BASIC";
+  USE_HW_FP = "false";
+  MEASURE_MAX_RUNTIME = "false";
+  TIMING_PROTECTION = "false";
+};
+TASK Background_Task
+{
+  vs_ID = "4";
+  STATE = "OS_taskDynamic[4].state";
+  CURRENTACTIVATIONS = "(OS_taskDynamic[4].state) != 0 ";
+  vs_MAXACTIVATIONS = "1";
+  STACK = "OS_taskStack_slot3";
+  vs_SHAREDSTACK = "false";
+  STACKSIZE = "90480";
+  vs_ASSIGNEDPRIO = "1";
+  vs_REALPRIORITY = "0";
+  PRIORITY = "OS_taskDynamic[4].prio";
+  TYPE = "BASIC";
+  USE_HW_FP = "false";
+  MEASURE_MAX_RUNTIME = "false";
+  TIMING_PROTECTION = "false";
+};
+
+
