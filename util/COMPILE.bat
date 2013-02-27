@@ -16,7 +16,7 @@ SET TRESOS_BASE=C:\EB\tresos\2010b\
 if exist "launch_cfg.bat" call launch_cfg
 
 :: set PROJECT_ROOT to the current project directory
-SET "PROJECT_ROOT=%CD%\.."
+SET PROJECT_ROOT=%CD%\..
 
 :: check, if the path variables for PROJECT_ROOT is set
 if not defined TRESOS_BASE GOTO missing_path_names_TRESOS_BASE
